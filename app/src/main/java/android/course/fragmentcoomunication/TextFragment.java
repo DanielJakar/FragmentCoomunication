@@ -19,48 +19,22 @@ import org.w3c.dom.Text;
  * to handle interaction events.
  */
 public class TextFragment extends Fragment {
-
+    private TextView tvHello;
     private OnTextChangedListener mListener;
-    TextView fragText;
-
-    public TextFragment() {
-        // Required empty public constructor
-    }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_text, container, false);
-
-        fragText = (TextView)v.findViewById(R.id.fragText);
-
+        tvHello = (TextView) v.findViewById(R.id.tvHello);
         return v;
     }
 
 
-    public void onTextChanged(String text) {
-        if (mListener != null) {
-            mListener.onTextchanged(text);
-        }
-    }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnTextChangedListener) {
-            mListener = (OnTextChangedListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement onTextChangedListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
+    public void setTextColor(int color) {
+        tvHello.setTextColor(color);
     }
 
     /**
@@ -74,7 +48,31 @@ public class TextFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnTextChangedListener {
-
-        void onTextchanged(String text);
+        void onTextChanged(String text);
     }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnTextChangedListener) {
+            mListener = (OnTextChangedListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnTextChangedListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+
+    public void onTextChanged(String text) {
+        if (mListener != null) {
+            mListener.onTextChanged(text);
+        }
+    }
+
 }

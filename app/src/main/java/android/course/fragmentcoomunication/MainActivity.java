@@ -8,8 +8,9 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements ColorFragment.OnColorChangedListener, TextFragment.OnTextChangedListener{
-    FrameLayout f1,f2;
+public class MainActivity extends AppCompatActivity implements
+        ColorFragment.OnColorChangedListener, TextFragment.OnTextChangedListener{
+    FrameLayout f1, f2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,25 +22,38 @@ public class MainActivity extends AppCompatActivity implements ColorFragment.OnC
         f2 = (FrameLayout) findViewById(R.id.fr2);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fr1, new ColorFragment(), "colorFrag").commit();
-        getSupportFragmentManager().beginTransaction().replace(R.id.fr2, new ColorFragment(), "textFrag").commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fr2, new TextFragment(), "textFrag").commit();
     }
 
 
-    @Override
-    public void onColorChanged(int color) {
-
-        Fragment frag = getSupportFragmentManager().findFragmentByTag("textFrag");
-        if (frag!=null){
-            TextFragment tf = (TextFragment) frag;
-
-            TextView fragText = (TextView) view.findViewById(R.id.fragText);
-            fragText.setTextColor(color);
-
-        }
+//    @Override
+//    public void onColorChanged(int color) {
+//
+//        Fragment frag = getSupportFragmentManager().findFragmentByTag("textFrag");
+//        if (frag!=null){
+//            TextFragment tf = (TextFragment) frag;
+//
+//            TextView fragText = (TextView) view.findViewById(R.id.fragText);
+//            fragText.setTextColor(color);
+//
+//        }
+//    }
+//
+//    @Override
+//    public void onTextchanged(String text) {
+//
+//    }
+@Override
+public void onColorChanged(int color) {
+    Fragment frag = getSupportFragmentManager().findFragmentByTag("textFrag");
+    if (frag != null){
+        TextFragment tf = (TextFragment) frag;
+        tf.setTextColor(color);
     }
+}
 
     @Override
-    public void onTextchanged(String text) {
+    public void onTextChanged(String text) {
 
     }
 }
